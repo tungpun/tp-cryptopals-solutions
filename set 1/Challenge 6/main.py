@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challange at http://cryptopals.com/sets/1/challenges/6/
+# This source code is my answer for challenge at http://cryptopals.com/sets/1/challenges/6/
 # I still have many things to do before finishing it
 
 import binascii
