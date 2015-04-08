@@ -7,16 +7,9 @@ from Crypto.Cipher import AES
 from Crypto import Random
 
 def main():	
-	myAES = AESCipher('YELLOW SUBMARINE')	
-	f = open("7.txt", "r")
-	ciphertext = f.read().replace('\n', '')	
-	f.close()
-	plaintext = myAES.decrypt(ciphertext)
-
-def main():	
 	f = open("7.txt", "r")	
 	ciphertext = f.read().replace('\n', '')	
-	f.close()	d
+	f.close()	
 	
 	key = 'YELLOW SUBMARINE'
 

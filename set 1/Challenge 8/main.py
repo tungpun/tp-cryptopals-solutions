@@ -4,13 +4,6 @@
 import re
 
 def main():	
-	myAES = AESCipher('YELLOW SUBMARINE')	
-	f = open("7.txt", "r")
-	ciphertext = f.read().replace('\n', '')	
-	f.close()
-	plaintext = myAES.decrypt(ciphertext)
-
-def main():	
 	f = open("8.txt", "r")	
 	data = f.read()
 	f.close()		
