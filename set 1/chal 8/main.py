@@ -1,4 +1,4 @@
-#/usr/bin python2.7
+#!/usr/bin/env python2.7
 # This source code is my answer for challange at http://cryptopals.com/sets/1/challenges/8/
 
 import re

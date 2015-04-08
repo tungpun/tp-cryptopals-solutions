@@ -1,4 +1,4 @@
-#/usr/bin python2.7
+#!/usr/bin/env python2.7
 # This source code is my answer for challange at http://cryptopals.com/sets/1/challenges/7/
 
 import hashlib
@@ -16,7 +16,7 @@ def main():
 def main():	
 	f = open("7.txt", "r")	
 	ciphertext = f.read().replace('\n', '')	
-	f.close()	
+	f.close()	d
 	
 	key = 'YELLOW SUBMARINE'
 
