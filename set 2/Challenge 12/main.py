@@ -37,7 +37,7 @@ def encrypt_oracle(plaintext):
 
 def PKCS7_padding(text, blocksize):		
 	needappend = blocksize - len(text) % blocksize
-	return (text + '\x20' * needappend)	
+	return text + chr(needappend) * needappend	
 
 
 def get_block_size(encrypt_oracle):		

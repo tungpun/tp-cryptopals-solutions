@@ -23,7 +23,7 @@ def make_random_string(keylength):
 
 
 def make_random_prefix():
-	rplen = randint(5, 128)	
+	rplen = randint(4, 128)	
 	return make_random_string(rplen)	
 
 
@@ -45,7 +45,7 @@ def encrypt_oracle(plaintext):
 
 def PKCS7_padding(text, blocksize):		
 	needappend = blocksize - len(text) % blocksize
-	return (text + '\x20' * needappend)	
+	return text + chr(needappend) * needappend	
 
 
 def get_block_size(encrypt_oracle):		
@@ -87,14 +87,14 @@ def calculate_length_of_random_prefix(blocksize):
 	"""
 	We add postfix to random-prefix, then apply comfirm-encrypt-ECB technique
 	"""
-	for rplen in range(0, blocksize):
-		rpfill = ' ' * ((blocksize - rplen) % blocksize)
+	for rplen in range(1, blocksize+1):
+		rpfill = ' ' * ((blocksize - rplen) % blocksize)		
 		duplicate = make_random_string(blocksize) * 2
 		ciphertext = encrypt_oracle(rpfill + duplicate)
 		blocks = re.findall('..' * blocksize, ciphertext.encode('hex'))
 		for i in range(len(blocks)-1):			
 			if blocks[i] == blocks[i+1]:
-				print '[+] The function encrypt_oracle is using ECB'
+				print '[+] The function encrypt_oracle is using ECB'				
 				return rplen + ((i - 1) * blocksize)
 
 
