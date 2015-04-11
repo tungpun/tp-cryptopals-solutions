@@ -11,14 +11,22 @@ from random import randint
 
 UNKNOWN_STRING = "Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBjYW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK"
 
-UNKNOWN_KEY = "WDs9Vj1XRS9GLTJPMDNPUg=="
 
+def make_random_key(keylength):
+	start = ord('\x20')
+	end = ord('z')	
+	key = ""
+	for i in range(0, keylength):
+		key += chr(randint(start, end+1))
+	return key
+
+KEY = make_random_key(16)			# blocksize = 16 is secret
 
 def encrypt_oracle(plaintext):		
 	"""
 	In realistic challenges, everything in this function is secret..... ignore it :D
 	"""	
-	key = base64.b64decode(UNKNOWN_KEY)	
+	key = KEY	
 	blocksize = 16		
 	plaintext = PKCS7_padding(plaintext + base64.b64decode(UNKNOWN_STRING), blocksize)	
 	aesobj = AES.new(key, AES.MODE_ECB)
@@ -30,15 +38,6 @@ def encrypt_oracle(plaintext):
 def PKCS7_padding(text, blocksize):		
 	needappend = blocksize - len(text) % blocksize
 	return (text + '\x20' * needappend)	
-
-
-def make_random_key(keylength):
-	start = ord('\x20')
-	end = ord('z')	
-	key = ""
-	for i in range(0, keylength):
-		key += chr(randint(start, end+1))
-	return key
 
 
 def get_block_size(encrypt_oracle):		
