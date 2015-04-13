@@ -38,8 +38,7 @@ def encrypt_oracle(plaintext):
 	plaintext = PKCS7_padding(RANDOM_PREFIX + plaintext + base64.b64decode(UNKNOWN_STRING), blocksize)	
 	aesobj = AES.new(KEY, AES.MODE_ECB)
 	ciphertext = aesobj.encrypt(plaintext)	
-	return ciphertext
-	return base64.b64encode(ciphertext)
+	return ciphertext	
 
 
 def PKCS7_padding(text, blocksize):		
