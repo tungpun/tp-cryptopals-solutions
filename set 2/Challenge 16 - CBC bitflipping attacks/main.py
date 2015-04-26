@@ -47,14 +47,14 @@ def second_function(ciphertext):
 
 	blocksize = 16
 	aes = AES.new(KEY, AES.MODE_CBC, IV)
-	plaintext = aes.decrypt(ciphertext)	
+	plaintext = aes.decrypt(ciphertext)		
 	if ';admin=true;' in plaintext:
 		return True
 	else:
 		return False
 
 
-def decrypt_oracble(ciphertext):
+def decrypt_oracle(ciphertext):
 	"""
 	Just a module for me to customize my ciphertext
 	"""
@@ -96,7 +96,7 @@ def bit_flipping(ciphertext, targetposition, targetvalue):
 	cipherList = list(ciphertext)
 	for i in range(256):		
 		cipherList[targetposition - BLOCKSIZE] = chr(i)		# Change byte at pos = targetPostion - BLOCKSIZE ...in 256 roung until found '='
-		myPlainText = decrypt_oracble(''.join(cipherList))				
+		myPlainText = decrypt_oracle(''.join(cipherList))				
 		if myPlainText[targetposition] == targetvalue:
 			break
 	myCipherText = ''.join(cipherList)
@@ -105,7 +105,7 @@ def bit_flipping(ciphertext, targetposition, targetvalue):
 
 def display(ciphertext):	
 	res = ''
-	plaintext = decrypt_oracble(ciphertext)
+	plaintext = decrypt_oracle(ciphertext)
 	for c in plaintext:
 		if is_printable(c):
 			res += c	
@@ -116,7 +116,7 @@ def display(ciphertext):
 
 if __name__ == '__main__':	
 	origCipherText = first_function(";admin=true;")
-	myPlainText = decrypt_oracble(origCipherText)	
+	myPlainText = decrypt_oracle(origCipherText)	
 	firstPos = myPlainText.find(" admin true ")		
 	myCipherText = bit_flipping(origCipherText, firstPos, ';')		
 	myCipherText = bit_flipping(myCipherText, firstPos+6, '=')

@@ -110,7 +110,7 @@ def get_unknown_string(encrypt_oracle, blocksize):
 	return knownstring
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':	
 	blocksize = get_block_size(encrypt_oracle)	
 	confirm_encrypt_ECB(encrypt_oracle, blocksize)	
 	print '[+] Unknown string:\n\n' + get_unknown_string(encrypt_oracle, blocksize)
