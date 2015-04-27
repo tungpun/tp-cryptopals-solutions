@@ -54,8 +54,7 @@ def crypt_ctr(thestring, key):
 		return encrypt_oracle(key, plaintext)
 
 	def xor_rawtext(bigrawtext, rawtext):	
-		res = ""
-		print '[DEBUG]', len(bigrawtext), len(rawtext)
+		res = ""		
 		for i in range(len(rawtext)):
 			res += chr(ord(bigrawtext[i]) ^ ord(rawtext[i]))
 		return res
@@ -65,8 +64,7 @@ def crypt_ctr(thestring, key):
 	counter = 0
 	output = ''
 	for block in blocks:		
-		keystream = produce_keystream(counter, NONCE, KEY)		
-		print keystream.encode('hex')
+		keystream = produce_keystream(counter, NONCE, KEY)				
 		output += xor_rawtext(keystream, block)
 		counter += 1
 	return output
@@ -74,13 +72,62 @@ def crypt_ctr(thestring, key):
 
 def first_encrypt():
 	f = open('data', 'r')
-	lines = f.readlines()
+	lines = f.readlines()	
 	f.close()
 	ciphertexts = []
 	for line in lines:
-		ciphertexts.append(crypt_ctr(base64.b64decode(line), KEY))
+		ciphertexts.append(crypt_ctr(base64.b64decode(line), KEY))		
 	return ciphertexts
+
+
+def mxor_rawtext(rawtext1, rawtext2):	
+	if len(rawtext1) < len(rawtext2):
+		rawtext1, rawtext2 = rawtext2, rawtext1
+	# now, len(rawtext1) >= len(rawtext2)
+	rawtext2 += '\x00' * (len(rawtext1) - len(rawtext2))
+	res = ""			
+	for i in range(len(rawtext1)):
+		res += chr(ord(rawtext1[i]) ^ ord(rawtext2[i]))
+	return res
+
+
+def break_ctr(ciphertexts):
+	def get_pair_with_an_entry(eid, ciphertexts):
+		firstentry = ciphertexts[eid]
+		pairs = []
+		for i in range(0, len(ciphertexts)):
+			pairs.append(mxor_rawtext(firstentry, ciphertexts[i]))
+		return pairs
+
+	def guest_characters_of_an_entry(pairs, keyword):
+		total = []
+		for i in range(50):
+			total.append('+')
+
+		def do_clean(s):
+			res = ''
+			for i in range(len(s)):
+				c = s[i]
+				if '\x20' <= c <= 'z':
+					res += c
+				else:
+					res += '_'
+					total[i] = '_'
+			return res		
+		cnt = 0
+		for pair in pairs:
+			print '%02d' % cnt, do_clean(mxor_rawtext(pair, keyword))
+			cnt += 1
+		print '   ' + ''.join(total)
+
+
+	eid = 6				# We must manually configure this variables
+	keyword = 'Or have lingered awhile and said '
+
+	pairs0 = get_pair_with_an_entry(eid, ciphertexts)	
+	guest_characters_of_an_entry(pairs0, keyword)
 
 
 if __name__ == '__main__':	
 	ciphertexts = first_encrypt()
+	break_ctr(ciphertexts)
