@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challenge at http://cryptopals.com/sets/1/challenges/18/
+# This source code is my answer for challenge at http://cryptopals.com/sets/1/challenges/19/
 
 import hashlib
 import base64
@@ -8,7 +8,20 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from random import randint
 
+
+def make_random_string(keylength):
+	return 'A' * keylength
+	start = ord('\x20')
+	end = ord('z')	
+	key = ""
+	for i in range(0, keylength):
+		key += chr(randint(start, end+1))
+	return key
+
+
 BLOCKSIZE = 16
+NONCE =  '\x00'			# I am trying to play with binary
+KEY = make_random_string(BLOCKSIZE)
 
 def crypt_ctr(thestring, key):
 
@@ -41,7 +54,8 @@ def crypt_ctr(thestring, key):
 		return encrypt_oracle(key, plaintext)
 
 	def xor_rawtext(bigrawtext, rawtext):	
-		res = ""		
+		res = ""
+		print '[DEBUG]', len(bigrawtext), len(rawtext)
 		for i in range(len(rawtext)):
 			res += chr(ord(bigrawtext[i]) ^ ord(rawtext[i]))
 		return res
@@ -51,16 +65,22 @@ def crypt_ctr(thestring, key):
 	counter = 0
 	output = ''
 	for block in blocks:		
-		keystream = produce_keystream(counter, NONCE, KEY)				
+		keystream = produce_keystream(counter, NONCE, KEY)		
+		print keystream.encode('hex')
 		output += xor_rawtext(keystream, block)
 		counter += 1
 	return output
 
 
-THESTRING 	= base64.b64decode("L77na/nrFsKvynd6HzOoG7GHTLXsTVu9qvY/2syLXzhPweyyMTJULu/6/kXX0KSvoOLSFQ==")
-NONCE 	 	=  '\x00'			# I am trying to play with binary
-KEY 		= "YELLOW SUBMARINE"
+def first_encrypt():
+	f = open('data', 'r')
+	lines = f.readlines()
+	f.close()
+	ciphertexts = []
+	for line in lines:
+		ciphertexts.append(crypt_ctr(base64.b64decode(line), KEY))
+	return ciphertexts
 
 
-if __name__ == "__main__":			
-	print crypt_ctr(THESTRING, KEY)
+if __name__ == '__main__':	
+	ciphertexts = first_encrypt()
