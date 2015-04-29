@@ -1,7 +1,8 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challenge at http:#cryptopals.com/sets/1/challenges/21
+# This source code is my answer for challenge at http:#cryptopals.com/sets/1/challenges/22
 # Follow pseudo code at http://en.wikipedia.org/wiki/Mersenne_Twister
 
+SECRETSEED = 1233
 
 class MT19937RNG:
     # Initialize the generator from a seed
@@ -37,8 +38,24 @@ class MT19937RNG:
             if (y % 2) != 0: # y is odd
                 self.MT[i] = self.MT[i] ^ (2567483615) # 0x9908b0df
 
-            
+
+def get_seed(rnum):
+    def make_seed_list():            
+        seedlist = []
+        for seed in range(2000):
+            rng = MT19937RNG(seed)
+            seedlist.append(rng.extract_number())
+        return seedlist
+
+    seedlist = make_seed_list()    
+    for i in range(0, len(seedlist)):
+        print '[+] Tested:', i
+        if rnum == seedlist[i]:
+            return i
+    return -1
+
 if __name__ == '__main__':
-    seed = 23
-    rng = MT19937RNG(seed)
-    print rng.extract_number()
+    rng = MT19937RNG(SECRETSEED)
+    rnum = rng.extract_number()
+    print get_seed(rnum)
+    
