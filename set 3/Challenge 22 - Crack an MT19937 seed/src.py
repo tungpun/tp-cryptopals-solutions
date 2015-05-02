@@ -36,7 +36,7 @@ class MT19937RNG:
             y = (self.MT[i] & 0x80000000) + (self.MT[(i+1) % 624] & 0x7fffffff)  
             self.MT[i] = self.MT[(i + 397) % 624] ^ (y >> 1)
             if (y % 2) != 0: # y is odd
-                self.MT[i] = self.MT[i] ^ (2567483615) # 0x9908b0df
+                self.MT[i] = self.MT[i] ^ 0x9908b0df
 
 
 def get_seed(rnum):
