@@ -95,7 +95,7 @@ def bit_flipping(ciphertext, targetposition, targetvalue):
 
 	cipherList = list(ciphertext)
 	for i in range(256):		
-		cipherList[targetposition - BLOCKSIZE] = chr(i)		# Change byte at pos = targetPostion - BLOCKSIZE ...in 256 roung until found '='
+		cipherList[targetposition - BLOCKSIZE] = chr(i)		# Change byte at pos = targetPostion - BLOCKSIZE ...in 256 round until found '='
 		myPlainText = decrypt_oracle(''.join(cipherList))				
 		if myPlainText[targetposition] == targetvalue:
 			break
