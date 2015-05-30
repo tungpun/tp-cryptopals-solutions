@@ -48,6 +48,7 @@ def second_function(ciphertext):
 	blocksize = 16
 	aes = AES.new(KEY, AES.MODE_CBC, IV)
 	plaintext = aes.decrypt(ciphertext)		
+	print plaintext
 	if ';admin=true;' in plaintext:
 		return True
 	else:

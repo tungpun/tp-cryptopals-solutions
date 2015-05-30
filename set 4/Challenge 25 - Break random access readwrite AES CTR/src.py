@@ -75,7 +75,7 @@ def crypt_ctr(thestring):
 
 def encrypt_given_text():
 	f = open('20.txt', 'r')	
-	_givenText = base64.b64decode(f.read())		
+	_givenText = base64.b64decode(f.read())			
 	f.close()
 
 	return crypt_ctr(_givenText)
