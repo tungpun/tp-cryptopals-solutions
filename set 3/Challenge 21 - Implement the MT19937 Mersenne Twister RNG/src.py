@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challenge at http:#cryptopals.com/sets/1/challenges/21
+# This source code is my answer for challenge at http:#cryptopals.com/sets/3/challenges/21
 # Follow pseudo code at http://en.wikipedia.org/wiki/Mersenne_Twister
 
 

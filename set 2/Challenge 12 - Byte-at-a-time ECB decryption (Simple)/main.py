@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challenge at http://cryptopals.com/sets/1/challenges/12/
+# This source code is my answer for challenge at http://cryptopals.com/sets/2/challenges/12/
 # TODO: key -> blocksize
 
 import hashlib

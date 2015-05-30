@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challenge at http:#cryptopals.com/sets/1/challenges/23
+# This source code is my answer for challenge at http:#cryptopals.com/sets/3/challenges/23
 # Follow pseudo code at http://en.wikipedia.org/wiki/Mersenne_Twister
 
 from Crypto.Random import random

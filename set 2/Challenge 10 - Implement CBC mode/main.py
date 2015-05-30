@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-# This source code is my answer for challenge at http://cryptopals.com/sets/1/challenges/10/
+# This source code is my answer for challenge at http://cryptopals.com/sets/2/challenges/10/
 
 import hashlib
 import base64
